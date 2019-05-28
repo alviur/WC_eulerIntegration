@@ -35,16 +35,17 @@ def apply_H4_3scales(f_flat,W):
 
         if (subband < 5):
 
-            w1 += (tf.nn.conv2d(
+            w1 += (tf.nn.depthwise_conv2d(
                 input=tf.expand_dims(tf.expand_dims(f[subband], axis=0), axis=3),
                 # filter=tf.constant((kernelW_t['w1'][:, :, :, 0 * 18:0 * 18 + 18])),
                 filter=tf.constant((W['w1'][:, :, :, subband * 14:subband * 14 + 14]),dtype = tf.float32),
                 strides=[1, 1, 1, 1],
                 padding="SAME"))
 
+
         elif (subband < 9):
 
-            w2 += (tf.nn.conv2d(
+            w2 += (tf.nn.depthwise_conv2d(
                 input=tf.expand_dims(tf.expand_dims(f[subband], axis=0), axis=3),
                 filter=tf.constant(W['w2'][:, :, :, (subband - 5) * 14:(subband - 5) * 14 + 14],dtype = tf.float32),
                 strides=[1, 1, 1, 1],
@@ -52,14 +53,14 @@ def apply_H4_3scales(f_flat,W):
 
         elif (subband < 13):
 
-            w3 += tf.nn.conv2d(
+            w3 += tf.nn.depthwise_conv2d(
                 input=tf.expand_dims(tf.expand_dims(f[subband], axis=0), axis=3),
                 filter=tf.constant(W['w3'][:, :, :, (subband - 9) * 14:(subband - 9) * 14 + 14],dtype = tf.float32),
                 strides=[1, 1, 1, 1], padding="SAME")
 
         else:
 
-            w4 += (tf.nn.conv2d(
+            w4 += (tf.nn.depthwise_conv2d(
                 input=tf.expand_dims(tf.expand_dims(f[subband], axis=0), axis=3),
                 filter=tf.constant(W['w4'][:, :, :, (subband - 13) * 14:(subband - 13) * 14 + 14],dtype = tf.float32),
                 strides=[1, 1, 1, 1],
