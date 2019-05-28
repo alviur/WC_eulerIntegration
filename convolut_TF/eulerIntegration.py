@@ -54,8 +54,7 @@ with tf.Session() as sess:
             mat_data = sio.loadmat(mainPath +str(file+1)+'.mat')
             data = (mat_data['batchTest'])
 
-            integrated = np.zeros((10025, data.shape[0]))
-
+            integrated = np.zeros((10025, data.shape[1]))
 
             for img in range(data.shape[1]):
 
